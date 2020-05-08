@@ -37,7 +37,7 @@
                         <tr>
                             <td width="240" align="center">
                                 <a href="listWebFileItem?id=${webFile.id}">
-                                    <img class="img-circle" src="${pageContext.request.contextPath}/img/fileImg.jpg" width="200" height="180"><br/>
+                                    <img class="img-circle" src="${pageContext.request.contextPath}/img/fileImg.jpg"  width="200" height="180"><br/>
                                     文件名：${webFile.fileName}<br/>
                                     下载量：${webFile.downloadNum}
                                 </a>

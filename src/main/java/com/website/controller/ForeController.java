@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -138,9 +139,10 @@ public class ForeController {
     }
 
     @RequestMapping("/sendCaptcha")
-    public void sendCaptcha(String email, Model model) {
+    public String sendCaptcha(String email, Model model) {
         randomCaptcha = RandomUtil.randomNumbers(4);
         MyMailUtil.sendMail(email, randomCaptcha);
+        return null;    //返回null是为了防止jsp抛出异常
     }
     @RequestMapping("/register")
     public String register(User user, Model model, String captcha) {

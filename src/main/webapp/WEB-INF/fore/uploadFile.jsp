@@ -19,7 +19,7 @@
                 $("div.registerErrorMessageDiv").css("visibility","visible");
                 return false;
             }
-            alert("如果文件过大,上传时间也会相对较长请耐心等候");
+            alert("文件正在上传，请稍后。<br/> 注意：如果文件体积较大上传时间可能也会相对缓慢");
             return true;
         });
 

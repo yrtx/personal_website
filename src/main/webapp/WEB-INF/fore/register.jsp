@@ -8,6 +8,18 @@
         $("div.registerErrorMessageDiv").css("visibility","visible");
         </c:if>
 
+        $("#sendCaptcha").click(function () {
+            if(0==$("#email").val().length) {
+                alert("请先输入邮箱");
+                return false;
+            }
+            var email = $("#email").val();
+            $.ajax({
+                url:"${pageContext.request.contextPath}/fore/sendCaptcha",
+                data:{"email":email}
+            });
+        });
+
         $(".registerForm").submit(function(){
             if(0==$("#name").val().length){
                 $("span.errorMessage").html("请输入用户名");
@@ -39,19 +51,6 @@
                 $("div.registerErrorMessageDiv").css("visibility","visible");
                 return false;
             }
-
-            $("#sendCaptcha").click(function () {
-                if(0==$("#email").val().length) {
-                    alert("请先输入邮箱");
-                    return false;
-                }
-                var email = $("#email").val();
-                $.ajax({
-                    url:"${pageContext.request.contextPath}/sendCaptcha",
-                    data:{"email":email}
-                });
-            });
-
             return true;
         });
 
@@ -96,8 +95,8 @@
 				<td  class="registerTip registerTableLeftTD">邮箱验证码</td>
 			</tr>
 			<tr>
-				<td class="registerTableLeftTD">
-					<button id="sendCaptcha" class="btn btn-primary">获取验证码</button>
+				<td align="right">
+					<a id="sendCaptcha" class="btn btn-default">获取验证码</a>
 				</td>
 				<td class="registerTableRightTD">
 					<input id="captcha" name="captcha" type="text" placeholder="请输入验证码" >
