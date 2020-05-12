@@ -19,7 +19,8 @@
                 $("div.registerErrorMessageDiv").css("visibility","visible");
                 return false;
             }
-            alert("文件正在上传，请稍后。<br/> 注意：如果文件体积较大上传时间可能也会相对缓慢");
+            alert("文件正在上传，请稍后。" +
+				"注意：如果文件体积较大上传时间可能也会相对缓慢");
             return true;
         });
 
@@ -29,7 +30,7 @@
 
 
 
-<form method="post" action="uploadFile?usersId=${loginUser.id}" class="registerForm" enctype="multipart/form-data">
+<form method="post" action="${pageContext.request.contextPath}/fore/uploadFile?usersId=${loginUser.id}" class="registerForm" enctype="multipart/form-data">
 	<div class="registerDiv">
 		<div class="registerErrorMessageDiv">
 			<div class="alert alert-danger" role="alert">

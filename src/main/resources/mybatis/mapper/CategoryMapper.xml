@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.website.pojo.Category">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -35,7 +36,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, category_name
+    id, category_name, url
   </sql>
   <select id="selectByExample" parameterType="com.website.pojo.CategoryExample" resultMap="BaseResultMap">
     select
@@ -63,8 +64,8 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.website.pojo.Category" useGeneratedKeys="true">
-    insert into category (category_name)
-    values (#{categoryName,jdbcType=VARCHAR})
+    insert into category (category_name, url)
+    values (#{categoryName,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.website.pojo.Category" useGeneratedKeys="true">
     insert into category
@@ -72,10 +73,16 @@
       <if test="categoryName != null">
         category_name,
       </if>
+      <if test="url != null">
+        url,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="categoryName != null">
         #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -85,12 +92,16 @@
       <if test="categoryName != null">
         category_name = #{categoryName,jdbcType=VARCHAR},
       </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.website.pojo.Category">
     update category
-    set category_name = #{categoryName,jdbcType=VARCHAR}
+    set category_name = #{categoryName,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -65,11 +65,10 @@
     delete from review
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="bathDeleteByWebFileId" parameterType="java.lang.Long">
+  <delete id="deleteByWebFileId" parameterType="java.lang.Long">
     delete from review
-    where file_id = #{file_id,jdbcType=BIGINT}
+    where file_id = #{file_id, jdbcType=BIGINT}
   </delete>
-
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.website.pojo.Review" useGeneratedKeys="true">
     insert into review (content, create_time, user_id, 
       file_id)

@@ -28,11 +28,15 @@
 	<div class="panel panel-warning editDiv">
 		<div class="panel-heading">编辑分类</div>
 		<div class="panel-body">
-			<form method="post" id="editForm" action="admin_update_category">
+			<form method="post" id="editForm" action="admin_update_category" enctype="multipart/form-data">
 				<table class="editTable">
 					<tr>
 						<td>分类名称</td>
 						<td><input  id="name" name="categoryName" value="${category.categoryName}" type="text" class="form-control"></td>
+					</tr>
+					<tr>
+						<td>分类图片</td>
+						<td><input  id="img" name="img" type="file" multiple="image/*" class="form-control"></td>
 					</tr>
 					<tr class="submitTR">
 						<td colspan="2" align="center">

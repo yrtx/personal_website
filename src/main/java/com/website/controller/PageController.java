@@ -5,6 +5,11 @@ import com.website.service.CategoryService;
 import com.website.service.ReviewService;
 import com.website.service.UserService;
 import com.website.service.WebFileService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,30 +35,24 @@ public class PageController {
         model.addAttribute("reviewNum", reviewService.list(null).size());
         return "admin/main";
     }
-    @RequestMapping("/admin_loginUI")
+    @RequestMapping("/admin")
     public String adminLoginUI(Model model) {
         return "admin/login";
     }
     @RequestMapping("/admin_login")
-    public String adminLogin(User user, Model model, HttpSession session) {
-        User login = userService.getByNameAndPwd(user.getUserName(), user.getPwd());
-        if(login != null) {
-            if("李悠然".equals(login.getUserName())) {
-                session.setAttribute("adminLoginUser", login);
-                return "redirect:admin_main";
-            }
-            model.addAttribute("msg", "你没有进入后台的权限");
+    public String adminLogin(User user, Model model) {
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(), user.getPwd());
+        try {
+            subject.login(token);
+            Session session=subject.getSession();
+            session.setAttribute("loginUser", subject.getPrincipal());
+            return "redirect:admin_main";
+        } catch (AuthenticationException e) {
+            model.addAttribute("msg", "账号或密码错误");
             return "admin/login";
         }
-        model.addAttribute("msg", "账号或密码错误");
-        return "admin/login";
     }
-    @RequestMapping("/admin_logout")
-    public String admin_logout(HttpSession session) {
-        session.removeAttribute("adminLoginUser");
-        return "admin/login";
-    }
-
 
     @RequestMapping("/fore/loginUI")
     public String loginUI() {
@@ -64,4 +63,8 @@ public class PageController {
         return "fore/register";
     }
 
+    @RequestMapping("/unauthorized")
+    public String unauthorized() {
+        return "unauthorized";
+    }
 }

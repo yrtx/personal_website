@@ -2,6 +2,7 @@ package com.website.test;
 
 import com.website.mapper.*;
 import com.website.pojo.*;
+import com.website.service.PermissionService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,8 @@ public class TestMapper {
     WebFileMapper webFileMapper;
     @Autowired
     ReviewMapper reviewMapper;
-
+    @Autowired
+    PermissionMapper permissionMapper;
     @Test
     public void testAdd() {
 

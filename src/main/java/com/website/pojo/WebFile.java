@@ -1,5 +1,6 @@
 package com.website.pojo;
 
+import java.text.DateFormat;
 import java.util.Date;
 
 public class WebFile {
@@ -26,36 +27,8 @@ public class WebFile {
 
     private String createDate;
 
-    private String type;
-
-    public WebFile() {
-    }
-
-    public WebFile(Long id, String fileName, String url, Date createTime, Integer downloadNum, String isAllow, Long usersId, Long categoryId, User user, Category category, String createDate, String type) {
-        this.id = id;
-        this.fileName = fileName;
-        this.url = url;
-        this.createTime = createTime;
-        this.downloadNum = downloadNum;
-        this.isAllow = isAllow;
-        this.usersId = usersId;
-        this.categoryId = categoryId;
-        this.user = user;
-        this.category = category;
-        this.createDate = createDate;
-        this.type = type;
-    }
-
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
+    public String getCreateDate() {
+        return DateFormat.getDateTimeInstance().format(createTime);
     }
 
     public User getUser() {
@@ -72,51 +45,6 @@ public class WebFile {
 
     public void setCategory(Category category) {
         this.category = category;
-    }
-
-    public String getCreateDate() {
-        String[] split = getCreateTime().toString().split(" ");
-        StringBuilder date = new StringBuilder();
-        date.append(split[5] + "/");
-        switch (split[1]){
-            case "Jan":
-                date.append("01/");
-                break;
-            case "Feb":
-                date.append("02/");
-                break;
-            case "Mar":
-                date.append("03/");
-                break;
-            case "Apr":
-                date.append("04/");
-                break;
-            case "May":
-                date.append("05/");
-                break;
-            case "Jun":
-                date.append("06/");
-                break;
-            case "Jul":
-                date.append("07/");
-                break;
-            case "Aug":
-                date.append("08/");
-                break;
-            case "Sept":
-                date.append("09/");
-                break;
-            case "Oct":
-                date.append("10/");
-                break;
-            case "Nov":
-                date.append("11/");
-                break;
-            case "Dec":
-                date.append("12/");
-                break;
-        }
-        return date.append(split[2] + "  " + split[3]).toString();
     }
 
     public Long getId() {

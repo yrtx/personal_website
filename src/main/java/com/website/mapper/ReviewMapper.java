@@ -7,7 +7,7 @@ import java.util.List;
 public interface ReviewMapper {
     int deleteByPrimaryKey(Long id);
 
-    int bathDeleteByWebFileId(Long id);
+    int deleteByWebFileId(Long id);
 
     int insert(Review record);
 

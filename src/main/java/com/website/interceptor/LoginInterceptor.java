@@ -27,27 +27,27 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
         HttpSession session = request.getSession();
         String contextPath=session.getServletContext().getContextPath();
-        String[] noNeedAuthPage = new String[]{
-                "/main",
-                "/login",
-                "/loginUI",
-                "/register",
-                "/registerUI",
-                "/listWebFileItem",
-                "/sendCaptcha",
-                "/listWebFileItemByCategory"};
-
-        String uri = request.getRequestURI();
-        uri = StringUtils.remove(uri, contextPath);
-        System.out.println(uri);
-        String method = StringUtils.substringAfterLast(uri,"/fore" );
-        if(!Arrays.asList(noNeedAuthPage).contains(method)){
-            User user =(User) session.getAttribute("loginUser");
-            if(null==user){
-                response.sendRedirect("loginUI");
-                return false;
-            }
-        }
+//        String[] noNeedAuthPage = new String[]{//无需登录url
+//                "/main",
+//                "/login",
+//                "/loginUI",
+//                "/register",
+//                "/registerUI",
+//                "/listWebFileItem",
+//                "/sendCaptcha",
+//                "/listWebFileItemByCategory"};
+//
+//        String uri = request.getRequestURI();
+//        uri = StringUtils.remove(uri, contextPath);
+//        System.out.println(uri);
+//        String method = StringUtils.substringAfterLast(uri,"/fore" );
+//        if(!Arrays.asList(noNeedAuthPage).contains(method)){
+//            User user =(User) session.getAttribute("loginUser");
+//            if(null==user){
+//                response.sendRedirect("loginUI");
+//                return false;
+//            }
+//        }
 
         return true;
 

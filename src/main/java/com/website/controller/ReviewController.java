@@ -25,7 +25,7 @@ public class ReviewController {
     }
     @RequestMapping("/admin_delete_review")
     public String deleteReview(Long id, Long fileId, Model model) {
-        reviewService.deleteReview(id);
+        reviewService.delete(id);
         return "redirect:admin_list_review?id="+fileId;
     }
 }

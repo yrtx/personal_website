@@ -11,7 +11,8 @@
     <title>未知错误</title>
 </head>
 <body>
-    <h1>操作失败！！<a href="main">点击返回主页</a></h1>
+    <h1>操作失败！！<a href="fore/main">点击返回主页</a></h1>
+    <a href="#" onClick="javascript:history.back()">返回</a>
 ${ex}
 </body>
 </html>

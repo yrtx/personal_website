@@ -34,7 +34,7 @@
 
     <img id="loginBackgroundImg" class="loginBackgroundImg" src="${pageContext.request.contextPath}/img/loginBackground.png">
 
-    <form class="loginForm" action="login" method="post">
+    <form class="loginForm" action="${pageContext.request.contextPath}/fore/login" method="post">
         <div id="loginSmallDiv" class="loginSmallDiv">
             <div class="loginErrorMessageDiv">
                 <div class="alert alert-danger" >
@@ -60,12 +60,11 @@
 
             <div>
                 <a class="notImplementLink" href="#nowhere">忘记登录密码</a>
-                <a href="registerUI" class="pull-right">免费注册</a>
+                <a href="${pageContext.request.contextPath}/fore/registerUI" class="pull-right">免费注册</a>
             </div>
             <div style="margin-top:20px">
                 <button class="btn btn-block redButton" type="submit">登录</button>
             </div>
         </div>
     </form>
-
 </div>

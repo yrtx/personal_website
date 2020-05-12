@@ -25,7 +25,7 @@ public class ReviewServiceImpl implements ReviewService {
     @Resource
     UserService userService;
     @Override
-    public void addReview(Review review) {
+    public void add(Review review) {
         review.setCreateTime(new Date());
         int insert = reviewMapper.insert(review);
         if(insert <= 0) {
@@ -34,17 +34,17 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public void deleteReview(Long id) {
+    public void delete(Long id) {
         reviewMapper.deleteByPrimaryKey(id);
     }
 
     @Override
-    public void deleteReviewByWebFileId(Long id) {
-        reviewMapper.bathDeleteByWebFileId(id);
+    public void deleteByWebFileId(Long id) {
+        reviewMapper.deleteByWebFileId(id);
     }
 
     @Override
-    public void updateReview(Review review) {
+    public void update(Review review) {
         reviewMapper.updateByPrimaryKeySelective(review);
     }
 

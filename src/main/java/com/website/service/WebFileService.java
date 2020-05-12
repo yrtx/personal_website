@@ -8,11 +8,11 @@ import java.util.List;
 
 public interface WebFileService {
 
-    void addWebFile(WebFile webFile);
+    void add(WebFile webFile);
 
-    void deleteWebFile(Long id);
+    void delete(Long id);
 
-    void updateWebFile(WebFile webFile);
+    void update(WebFile webFile);
 
     WebFile getById(Long id);
 
@@ -24,5 +24,4 @@ public interface WebFileService {
 
     List<WebFile> list(WebFileExample example);
 
-    List<WebFile> listByDownload();
 }

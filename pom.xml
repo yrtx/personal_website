@@ -33,6 +33,7 @@
     <aopalliance.version>1.0</aopalliance.version>
     <mybatis-generator.version>1.3.5</mybatis-generator.version>
     <hutool.version>5.3.2</hutool.version>
+    <shiro.version>1.4.0</shiro.version>
   </properties>
 
   <dependencies>
@@ -193,6 +194,22 @@
       <groupId>org.mybatis.generator</groupId>
       <artifactId>mybatis-generator-core</artifactId>
       <version>${mybatis-generator.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-core</artifactId>
+      <version>${shiro.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-web</artifactId>
+      <version>${shiro.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.shiro</groupId>
+      <artifactId>shiro-spring</artifactId>
+      <version>${shiro.version}</version>
     </dependency>
 
   </dependencies>

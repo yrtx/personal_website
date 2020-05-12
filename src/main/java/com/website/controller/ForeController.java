@@ -8,6 +8,13 @@ import com.website.pojo.*;
 import com.website.service.*;
 import com.website.util.MyMailUtil;
 import org.apache.commons.io.FileUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
+import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,12 +23,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -55,7 +60,7 @@ public class ForeController {
     public ResponseEntity<byte[]> download(Long id) throws IOException {
         WebFile webFile = webFileService.getById(id);
         webFile.setDownloadNum(webFile.getDownloadNum() + 1);
-        webFileService.updateWebFile(webFile);
+        webFileService.update(webFile);
         File file = new File(webFile.getUrl());
         String type = FileTypeUtil.getType(file);
         HttpHeaders headers = new HttpHeaders();
@@ -79,7 +84,7 @@ public class ForeController {
         newFile.getParentFile().mkdirs();
         upFile.transferTo(newFile);
         webFile.setUrl(newFile.getPath());
-        webFileService.addWebFile(webFile);
+        webFileService.add(webFile);
         return "redirect:main";
     }
 
@@ -105,13 +110,13 @@ public class ForeController {
 
     @RequestMapping("/addReview")
     public String addReview(Review review) {
-        reviewService.addReview(review);
+        reviewService.add(review);
         return "redirect:listWebFileItem?id="+review.getFileId();
     }
 
     @RequestMapping("/deleteReview")
     public String deleteReview(Long id, Long fileId) {
-        reviewService.deleteReview(id);
+        reviewService.delete(id);
         return "redirect:listWebFileItem?id="+fileId;
     }
     @RequestMapping("/editUser")
@@ -122,20 +127,32 @@ public class ForeController {
     }
 
     @RequestMapping("/updateUser")
-    public String updateUser(User user) {
+    public String updateUser(User user, String captcha) {
+        if(!captcha.equals(randomCaptcha)) {
+            return "fore/editUser";
+        }
+        if(user.getPwd().length()!=0) {
+            byShiroToUser(user);
+        }else {
+            user.setPwd(null);
+        }
         userService.update(user);
         return "redirect:main";
     }
 
     @RequestMapping("/login")
-    public String login(User user, Model model, HttpSession session) {
-        User login = userService.getByNameAndPwd(user.getUserName(), user.getPwd());
-        if(login != null) {
-            session.setAttribute("loginUser", login);
+    public String login(User user, Model model) {
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(), user.getPwd());
+        try {
+            subject.login(token);
+            Session session=subject.getSession();
+            session.setAttribute("loginUser", subject.getPrincipal());
             return "redirect:main";
+        } catch (AuthenticationException e) {
+            model.addAttribute("msg", "账号或密码错误");
+            return "fore/login";
         }
-        model.addAttribute("msg", "账号或密码错误");
-        return "fore/login";
     }
 
     @RequestMapping("/sendCaptcha")
@@ -154,13 +171,18 @@ public class ForeController {
             model.addAttribute("msg", "用户名已存在");
             return "fore/register";
         }
+        byShiroToUser(user);
         userService.add(user);
         return "fore/login";
     }
-    @RequestMapping("/logout")
-    public String logout(HttpSession session) {
-        session.removeAttribute("loginUser");
-        return "redirect:main";
+
+    private void byShiroToUser(User user) {
+        String salt = new SecureRandomNumberGenerator().nextBytes().toString();
+        int times = 2;
+        String algorithmName = "md5";
+        String encodedPassword = new SimpleHash(algorithmName,user.getPwd(),salt,times).toString();
+        user.setPwd(encodedPassword);
+        user.setSalt(salt);
     }
 
 }

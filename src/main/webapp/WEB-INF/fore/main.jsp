@@ -16,26 +16,26 @@
 <body>
     <div class="container">
         <div class="row" style="float:right">
-            <a href="uploadFileUI" class="btn btn-link">上传文件</a>
+            <a href="${pageContext.request.contextPath}/fore/uploadFileUI" class="btn btn-link">上传文件</a>
             <c:if test="${loginUser == null}">
-                <a href="loginUI" class="btn btn-link">登录</a>
-                <a href="registerUI" class="btn btn-link">注册</a>
+                <a href="${pageContext.request.contextPath}/fore/loginUI" class="btn btn-link">登录</a>
+                <a href="${pageContext.request.contextPath}/fore/registerUI" class="btn btn-link">注册</a>
             </c:if>
             <c:if test="${loginUser != null}">
-                <a href="editUser?id=${loginUser.id}" class="btn btn-link">您好,${loginUser.userName}</a>
-                <a href="logout" class="btn btn-link">退出</a>
+                <a href="${pageContext.request.contextPath}/fore/editUser?id=${loginUser.id}" class="btn btn-link">您好,${loginUser.userName}</a>
+                <a href="${pageContext.request.contextPath}/fore/logout" class="btn btn-link">退出</a>
 
             </c:if>
 
         </div>
         <div class="row" align="center">
-            <a class="btn btn-link" href="main"><h1>星火创意工坊（电子小组）</h1></a>
+            <a class="btn btn-link" href="${pageContext.request.contextPath}/fore/main"><h1>星火创意工坊（电子小组）</h1></a>
         </div>
         <div class="row">
             <c:forEach items="${categories}" var="category">
                 <div style="width:500px;float:left;margin:0 auto" align="center">
-                    <a href="listWebFileItemByCategory?id=${category.id}">
-                        <img width="300" height="200" src="${pageContext.request.contextPath}/img/${category.id}.jpg" class="img-circle">
+                    <a href="${pageContext.request.contextPath}/fore/listWebFileItemByCategory?id=${category.id}">
+                        <img width="300" height="200" src="${category.showUrl}" class="img-circle">
                         <h2>${category.categoryName}</h2>
                     </a>
                 </div>

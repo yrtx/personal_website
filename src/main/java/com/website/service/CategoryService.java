@@ -7,11 +7,11 @@ import com.website.pojo.CategoryExample;
 import java.util.List;
 
 public interface CategoryService {
-    void addCategory(Category category);
+    void add(Category category);
 
-    void deleteCategory(Long id);
+    void delete(Long id);
 
-    void updateCategory(Category category);
+    void update(Category category);
 
     Category getById(Long id);
 

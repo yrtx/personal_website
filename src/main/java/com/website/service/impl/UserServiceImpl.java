@@ -3,7 +3,9 @@ package com.website.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.website.mapper.UserMapper;
+import com.website.mapper.UserRoleMapper;
 import com.website.pojo.*;
+import com.website.service.RoleService;
 import com.website.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,10 @@ public class UserServiceImpl implements UserService {
     Logger logger = Logger.getLogger(UserServiceImpl.class);
     @Resource
     UserMapper userMapper;
+    @Resource
+    UserRoleMapper userRoleMapper;
+    @Resource
+    RoleService roleService;
 
     @Override
     public User getByName(String name) {
@@ -46,6 +52,7 @@ public class UserServiceImpl implements UserService {
         if(insert <= 0) {
             logger.error("注册失败");
         }
+        userRoleMapper.insert(new UserRoleKey(u.getId(), roleService.getIdByName("普通用户")));
     }
 
     @Override

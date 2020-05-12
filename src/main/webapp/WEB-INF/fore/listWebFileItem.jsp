@@ -24,30 +24,20 @@
 </head>
 <body>
     <div class="container">
-        <div class="row" style="float:right">
-            <c:if test="${loginUser == null}">
-                <a href="loginUI" class="btn btn-link">登录</a>
-                <a href="registerUI" class="btn btn-link">注册</a>
-            </c:if>
-            <c:if test="${loginUser != null}">
-                <a href="#" class="btn btn-link">您好,${loginUser.userName}</a>
-                <a href="logout" class="btn btn-link">退出</a>
-            </c:if>
-
         </div>
         <div class="row" align="center">
-            <a class="btn btn-link" href="main"><h1>星火创意工坊（电子小组）</h1></a>
+            <a class="btn btn-link" href="${pageContext.request.contextPath}/fore/main"><h1>星火创意工坊（电子小组）</h1></a>
         </div>
         <div class="row" align="center">
             <h1>${webFile.fileName}</h1>
             <h3>上传用户：${webFile.user.userName}</h3>
             <h3>上传时间：${webFile.createDate}</h3>
-            <a href="downloadFile?id=${webFile.id}" class="btn btn-link">单击下载</a>
+            <a href="${pageContext.request.contextPath}/fore/downloadFile?id=${webFile.id}" class="btn btn-link">单击下载</a>
         </div>
         <div class="row" align="center">
             <div class="panel panel-warning addDiv">
                 <div class="panel-body" style="width: 800px">
-                    <form method="post" id="addForm" action="addReview?fileId=${webFile.id}&userId=${loginUser.id}">
+                    <form method="post" id="addForm" action="${pageContext.request.contextPath}/fore/addReview?fileId=${webFile.id}&userId=${loginUser.id}">
                         <table class="addTable">
                             <tr>
                                 <td>
@@ -71,7 +61,7 @@
                         <td align="center" width="150px">${review.user.userName}<br/>${review.createDate}</td>
                         <td>${review.content}
                             <c:if test="${review.userId == loginUser.id}">
-                                <a href="deleteReview?id=${review.id}&fileId=${review.fileId}">
+                                <a href="${pageContext.request.contextPath}/fore/deleteReview?id=${review.id}&fileId=${review.fileId}">
                                     <span class="glyphicon glyphicon-trash" style="float: right"></span>
                                 </a>
                             </c:if>

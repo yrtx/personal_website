@@ -16,12 +16,12 @@
     <div class="container">
         <div class="row" style="float:right">
             <c:if test="${loginUser == null}">
-                <a href="loginUI" class="btn btn-link">登录</a>
-                <a href="registerUI" class="btn btn-link">注册</a>
+                <a href="${pageContext.request.contextPath}/fore/loginUI" class="btn btn-link">登录</a>
+                <a href="${pageContext.request.contextPath}/fore/registerUI" class="btn btn-link">注册</a>
             </c:if>
             <c:if test="${loginUser != null}">
                 <a href="#" class="btn btn-link">您好,${loginUser.userName}</a>
-                <a href="logout" class="btn btn-link">退出</a>
+                <a href="${pageContext.request.contextPath}/fore/logout" class="btn btn-link">退出</a>
             </c:if>
         </div>
         <div class="row" align="center">
@@ -36,7 +36,7 @@
                     <c:forEach items="${pageInfo.list}" var="webFile">
                         <tr>
                             <td width="240" align="center">
-                                <a href="listWebFileItem?id=${webFile.id}">
+                                <a href="${pageContext.request.contextPath}/fore/listWebFileItem?id=${webFile.id}">
                                     <img class="img-circle" src="${pageContext.request.contextPath}/img/fileImg.jpg"  width="200" height="180"><br/>
                                     文件名：${webFile.fileName}<br/>
                                     下载量：${webFile.downloadNum}

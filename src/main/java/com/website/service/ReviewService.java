@@ -7,13 +7,13 @@ import com.website.pojo.ReviewExample;
 import java.util.List;
 
 public interface ReviewService {
-    void addReview(Review review);
+    void add(Review review);
 
-    void deleteReview(Long id);
+    void delete(Long id);
 
-    void deleteReviewByWebFileId(Long id);
+    void deleteByWebFileId(Long id);
 
-    void updateReview(Review review);
+    void update(Review review);
 
     Review getById(Long id);
 

@@ -28,7 +28,7 @@ public class WebFileServiceImpl implements WebFileService {
     @Resource
     CategoryService categoryService;
     @Override
-    public void addWebFile(WebFile webFile) {
+    public void add(WebFile webFile) {
         webFile.setIsAllow("N");
         webFile.setDownloadNum(0);
         webFile.setCreateTime(new Date());
@@ -39,12 +39,12 @@ public class WebFileServiceImpl implements WebFileService {
     }
 
     @Override
-    public void deleteWebFile(Long id) {
+    public void delete(Long id) {
         webFileMapper.deleteByPrimaryKey(id);
     }
 
     @Override
-    public void updateWebFile(WebFile webFile) {
+    public void update(WebFile webFile) {
         webFileMapper.updateByPrimaryKeySelective(webFile);
     }
 
@@ -87,10 +87,4 @@ public class WebFileServiceImpl implements WebFileService {
         return new PageInfo<>(list(example), 5);
     }
 
-    @Override
-    public List<WebFile> listByDownload() {
-        WebFileExample example = new WebFileExample();
-        example.setOrderByClause("downloads desc");
-        return list(example);
-    }
 }

@@ -16,17 +16,17 @@ public class CategoryServiceImpl implements CategoryService {
     @Resource
     CategoryMapper categoryMapper;
     @Override
-    public void addCategory(Category category) {
+    public void add(Category category) {
         categoryMapper.insert(category);
     }
 
     @Override
-    public void deleteCategory(Long id) {
+    public void delete(Long id) {
         categoryMapper.deleteByPrimaryKey(id);
     }
 
     @Override
-    public void updateCategory(Category category) {
+    public void update(Category category) {
         categoryMapper.updateByPrimaryKeySelective(category);
     }
 

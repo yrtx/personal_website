@@ -27,15 +27,15 @@ public class WebFileController {
 
     @RequestMapping("/admin_delete_webFile")
     public String admin_delete_webFile(Long id) {
-        reviewService.deleteReviewByWebFileId(id);
-        webFileService.deleteWebFile(id);
+        reviewService.deleteByWebFileId(id);
+        webFileService.delete(id);
         return "redirect:admin_list_webFile";
     }
 
     @RequestMapping("/isAllow")
     public String isAllow(WebFile webFile) {
         webFile.setIsAllow("N".equals(webFile.getIsAllow()) ? "Y" : "N");
-        webFileService.updateWebFile(webFile);
+        webFileService.update(webFile);
         return "redirect:admin_list_webFile";
     }
 

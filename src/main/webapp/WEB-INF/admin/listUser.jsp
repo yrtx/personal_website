@@ -18,6 +18,7 @@
                 <th>ID</th>
                 <th>用户名</th>
                 <th>用户邮箱</th>
+                <th>用户角色管理</th>
             </tr>
             </thead>
             <tbody>
@@ -26,6 +27,7 @@
                     <td>${user.id}</td>
                     <td>${user.userName}</td>
                     <td>${user.email}</td>
+                    <td><a href="admin_edit_user_role?id=${user.id}"><span class="glyphicon glyphicon-edit"></span></a></td>
                 </tr>
             </c:forEach>
             </tbody>

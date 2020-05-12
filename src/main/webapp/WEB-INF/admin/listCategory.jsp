@@ -9,6 +9,8 @@
         $("#addForm").submit(function(){
             if(!checkEmpty("name","分类名称"))
                 return false;
+            if(!checkEmpty("img","分类图片"))
+                return false;
             return true;
         });
     });
@@ -50,11 +52,15 @@
         <div class="panel panel-warning addDiv">
             <div class="panel-heading">新增分类</div>
             <div class="panel-body">
-                <form method="post" id="addForm" action="admin_add_category">
+                <form method="post" id="addForm" action="admin_add_category" enctype="multipart/form-data">
                     <table class="addTable">
                         <tr>
                             <td>分类名称</td>
                             <td><input  id="name" name="categoryName" type="text" class="form-control"></td>
+                        </tr>
+                        <tr>
+                            <td>分类图片</td>
+                            <td><input  id="img" name="img" type="file" accept="image/*" class="form-control"></td>
                         </tr>
                         <tr class="submitTR">
                             <td colspan="2" align="center">
