@@ -2,8 +2,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="../include/fore/foreHead.jsp"%>
 <script>
+    var InterValObj; //timer变量，控制时间
+    var count = 60; //间隔函数，1秒执行
+    var curCount;//当前剩余秒数
+    var regEmail = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
     $(function(){
-        var regEmail = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
         <c:if test="${!empty msg}">
         $("span.errorMessage").html("${msg}");
         $("div.registerErrorMessageDiv").css("visibility","visible");
@@ -18,11 +21,26 @@
                 $("div.registerErrorMessageDiv").css("visibility","visible");
                 return false;
             }
+            sendMessage();
+            //向后台发送处理数据
             var email = $("#email").val();
             $.ajax({
+                // type:"POST", //用POST方式传输
+                // dataType:"json", //数据格式:JSON
                 url:"${pageContext.request.contextPath}/fore/sendCaptcha",
-                data:{"email":email}
+                data:{"email":email},
+                error:function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("邮件发送失败");
+                    alert(errorThrown);
+                },
+                success:function(){
+					alert("发送成功");
+                    //使用完输出流以后调用
+                    out.clear();
+                    out = pageContext.pushBody();
+                }
             });
+            return true;
         });
 
         $(".registerForm").submit(function(){
@@ -78,6 +96,24 @@
 
 
     })
+    function sendMessage() {
+        curCount = count;
+        //设置button效果，开始计时
+        $("#sendCaptcha").attr("disabled", "true");
+        $("#sendCaptcha").val("请在" + curCount + "秒内输入验证码");
+        InterValObj = window.setInterval(SetRemainTime, 1000); //启动计时器，1秒执行一次
+    }
+    function SetRemainTime() {
+        if (curCount == 0) {
+            window.clearInterval(InterValObj);//停止计时器
+            $("#sendCaptcha").removeAttr("disabled");//启用按钮
+            $("#sendCaptcha").val("发送验证码");
+        }
+        else {
+            curCount--;
+            $("#sendCaptcha").val("请在" + curCount + "秒内输入验证码");
+        }
+    }
 </script>
 
 <form method="post" action="${pageContext.request.contextPath}/fore/register" class="registerForm">
@@ -118,7 +154,7 @@
 			</tr>
 			<tr>
 				<td align="right">
-					<a id="sendCaptcha" class="btn btn-default">获取验证码</a>
+					<input type="button" value="发送验证码" id="sendCaptcha" class="btn btn-default" />
 				</td>
 				<td class="registerTableRightTD">
 					<input id="captcha" name="captcha" type="text" placeholder="请输入验证码" >
@@ -126,7 +162,7 @@
 			</tr>
 			<tr>
 				<td colspan="2" class="registerButtonTD">
-					<a href="loginUI"><button>提   交</button></a>
+					<a href="${pageContext.request.contextPath}/fore/loginUI"><button>提   交</button></a>
 				</td>
 			</tr>
 		</table>

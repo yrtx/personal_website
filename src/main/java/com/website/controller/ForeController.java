@@ -22,11 +22,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspWriter;
+import javax.servlet.jsp.PageContext;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -154,12 +158,14 @@ public class ForeController {
             return "fore/login";
         }
     }
-
     @RequestMapping("/sendCaptcha")
-    public String sendCaptcha(String email, Model model) {
+    public void sendCaptcha(String email) {
         randomCaptcha = RandomUtil.randomNumbers(4);
-        MyMailUtil.sendMail(email, randomCaptcha);
-        return null;    //返回null是为了防止jsp抛出异常
+        String sendMail = MyMailUtil.sendMail(email, randomCaptcha);
+        if(sendMail != null) {
+            System.out.println("邮件发送成功");
+        }
+//        return null;    //返回null是为了防止jsp抛出异常
     }
     @RequestMapping("/register")
     public String register(User user, Model model, String captcha) {

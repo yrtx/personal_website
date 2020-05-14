@@ -23,9 +23,8 @@ public class MyMailUtil {
         account.setUser("yrtx_liyouran@163.com");
         account.setPass("DCNFVTXLAWVJWGOH"); //密码
     }
-    public static void sendMail(String email, String rand) {
-        MailUtil.send(account, email, "来自星火创意工坊（电子小组）的验证邮件",
-                "您的验证码为："+rand, false);
-
+    public static String sendMail(String email, String rand) {
+        return MailUtil.send(account, email, "来自星火创意工坊（电子小组）的验证邮件",
+                "您的验证码为：" + rand, false);
     }
 }

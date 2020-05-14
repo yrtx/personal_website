@@ -4,6 +4,7 @@ import com.website.util.MyMailUtil;
 
 public class TestEmail {
     public static void main(String[] args) {
-        MyMailUtil.sendMail("2838458346@qq.com", "2518");
+        String s = MyMailUtil.sendMail("2627447475@qq.com", "2518");
+        System.out.println(s);
     }
 }
