@@ -85,6 +85,9 @@ public class ForeController {
     public String uploadFile(HttpServletRequest request, MultipartFile upFile, WebFile webFile) throws IOException {
         String newFileName = IdUtil.simpleUUID();
         File newFile = new File(request.getServletContext().getRealPath("/webFile"), newFileName);
+        if(FileTypeUtil.getType(newFile).equals("jpg") || FileTypeUtil.getType(newFile).equals("png")) {
+            newFile = new File(newFile.getPath() + "." + FileTypeUtil.getType(newFile));
+        }
         newFile.getParentFile().mkdirs();
         upFile.transferTo(newFile);
         webFile.setUrl(newFile.getPath());

@@ -64,6 +64,7 @@
 
 			<tr>
 				<td colspan="2" class="registerButtonTD">
+					<input type="hidden" name="usersId" value="${loginUser.id}"/>
 					<button>提   交</button>
 				</td>
 			</tr>

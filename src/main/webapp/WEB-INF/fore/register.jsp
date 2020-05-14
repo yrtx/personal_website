@@ -29,15 +29,16 @@
                 // dataType:"json", //数据格式:JSON
                 url:"${pageContext.request.contextPath}/fore/sendCaptcha",
                 data:{"email":email},
-                error:function (XMLHttpRequest, textStatus, errorThrown) {
-                    alert("邮件发送失败");
-                    alert(errorThrown);
-                },
                 success:function(){
 					alert("发送成功");
                     //使用完输出流以后调用
                     out.clear();
                     out = pageContext.pushBody();
+                },
+                error:function (XMLHttpRequest, textStatus, errorThrown) {
+                    if(errorThrown != null && !errorThrown.empty()) {
+                        alert("发送错误请联系技术人员" + errorThrown);
+                    }
                 }
             });
             return true;

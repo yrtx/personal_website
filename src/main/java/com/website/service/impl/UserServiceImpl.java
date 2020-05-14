@@ -51,8 +51,9 @@ public class UserServiceImpl implements UserService {
         int insert = userMapper.insert(u);
         if(insert <= 0) {
             logger.error("注册失败");
+        }else{
+            userRoleMapper.insert(new UserRoleKey(u.getId(), roleService.getIdByName("用户")));
         }
-        userRoleMapper.insert(new UserRoleKey(u.getId(), roleService.getIdByName("普通用户")));
     }
 
     @Override

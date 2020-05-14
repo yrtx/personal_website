@@ -50,7 +50,10 @@ public class WebFileServiceImpl implements WebFileService {
 
     @Override
     public WebFile getById(Long id) {
-        return webFileMapper.selectByPrimaryKey(id);
+        WebFile webFile = webFileMapper.selectByPrimaryKey(id);
+        webFile.setUser(userService.get(webFile.getUsersId()));
+        webFile.setCategory(categoryService.getById(webFile.getCategoryId()));
+        return webFile;
     }
 
     @Override
